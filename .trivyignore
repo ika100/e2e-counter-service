@@ -1,0 +1,4 @@
+# brace-expansion CVE-2026-14257 — DoS via m* pattern, npm-internal dep.
+# Mitigated: this service does not accept glob patterns from untrusted input.
+# Fix tracking: https://github.com/micromatch/brace-expansion/releases/tag/5.0.8
+CVE-2026-14257

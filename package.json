@@ -2,7 +2,7 @@
   "name": "counter-service",
   "version": "0.1.1",
   "type": "module",
-  "description": "REST microservice — tracks named in-memory counters via POST/GET /counters/:name",
+  "description": "REST microservice \u2014 tracks named in-memory counters via POST/GET /counters/:name",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -22,5 +22,8 @@
   "engines": {
     "node": ">=22"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "overrides": {
+    "brace-expansion": ">=5.0.8"
+  }
 }
