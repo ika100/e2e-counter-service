@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-28
+
+### Added
+- GET /counters — list all counters
+- DELETE /counters/:name — reset a counter (T-031)
+
+### Maintenance
+- **plan**: add T-030 list-counters and T-031 delete-counter tasks
+
 ## [0.1.2] - 2026-07-28
 
 ### Fixed
@@ -66,3 +75,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Unreleased]: https://github.com/ika100/e2e-counter-service/compare/v0.1.2...HEAD
 [0.1.2]: https://github.com/ika100/e2e-counter-service/compare/v0.1.1...v0.1.2
+
+[Unreleased]: https://github.com/ika100/e2e-counter-service/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/ika100/e2e-counter-service/compare/v0.1.2...v0.2.0
