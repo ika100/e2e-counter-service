@@ -52,7 +52,16 @@
 | T-023 | Body size limit | security/spec.md REQ: Input validation (oversized payload) | T-011 | Fastify `bodyLimit` set to `1024` bytes (1 KB); POST with body > 1 KB returns `413 Payload Too Large` | TC-017 | XS | M3 |
 | T-024 | GET /openapi.json — schema endpoint | contracts/spec.md REQ: OpenAPI schema (SHOULD) | T-011, T-012, T-013 | Route returns `200` with valid OpenAPI 3.1 JSON document describing all three endpoints; document includes schemas for success and error responses; validated with `ajv` in test | TC-018 | M | M3 |
 
-### Wave 3 [serial] — Security hardening (after Wave 2)
+### Wave 3 [parallel] — New features (after Wave 2)
+
+| ID | Title | Implements | Depends on | Acceptance criteria | Tests | Est | Milestone |
+|----|-------|-----------|------------|---------------------|-------|-----|-----------|
+| T-030 | GET /counters — list all counters | counter-api/spec.md | T-010, T-012 | `GET /counters` returns `200 { counters: [{ name, value }] }` sorted by name; returns `[]` when no counters exist; respects rate limit and CORS headers; integration test via `.inject()` | TC-030, TC-031, TC-032 | S | M3 |
+| T-031 | DELETE /counters/:name — reset a counter | counter-api/spec.md | T-010, T-011 | `DELETE /counters/:name` returns `204 No Content` on success; `404 { error, name }` if counter does not exist; name validation same as other routes; integration test via `.inject()` | TC-033, TC-034, TC-035 | S | M3 |
+
+---
+
+### Wave 4 [serial] — Security hardening (after Wave 3)
 
 | ID | Title | Implements | Depends on | Acceptance criteria | Tests | Est | Milestone |
 |----|-------|-----------|------------|---------------------|-------|-----|-----------|
