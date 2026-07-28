@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-07-28
+
+### Added
+- implement counter-service — all tasks complete
+
+### Maintenance
+- add devbox environment
+- initialise counter-service service
+
+## [0.1.0] - 2026-07-28
+
+### Added
+- implement counter-service — all tasks complete
+
+### Maintenance
+- add devbox environment
+- initialise counter-service service
+
 ### Added
 - Initial project scaffolding (T-001)
 - GitHub Actions CI/CD pipeline (T-CI-001)
@@ -22,3 +40,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GET /openapi.json schema endpoint (T-024)
 - Docker multi-stage build (T-DOCKER-001)
 - Docker Compose for local development (T-DOCKER-002)
+
+[Unreleased]: https://github.com/ika100/e2e-counter-service/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/ika100/e2e-counter-service/releases/tag/v0.1.0
