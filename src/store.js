@@ -42,4 +42,15 @@ export class CounterStore {
   delete(name) {
     return this.#counters.delete(name);
   }
+
+  /**
+   * Return all counters sorted by name.
+   *
+   * @returns {{ name: string, value: number }[]} Sorted array of counter entries.
+   */
+  list() {
+    return [...this.#counters.entries()]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([name, value]) => ({ name, value }));
+  }
 }
