@@ -53,15 +53,6 @@ export class CounterStore {
   }
 
   /**
-   * Return the number of unique counter names in the store.
-   *
-   * @returns {number} Count of unique counter names.
-   */
-  size() {
-    return this.#counters.size;
-  }
-
-  /**
    * Return all counters sorted by name.
    *
    * @returns {{ name: string, value: number }[]} Sorted array of counter entries.
