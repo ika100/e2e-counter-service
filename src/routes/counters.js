@@ -45,12 +45,45 @@ const errorResponseSchema = {
   },
 };
 
+const listResponseSchema = {
+  200: {
+    type: 'object',
+    properties: {
+      counters: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            value: { type: 'number' },
+          },
+          required: ['name', 'value'],
+        },
+      },
+    },
+    required: ['counters'],
+  },
+};
+
 /**
  * @param {import('fastify').FastifyInstance} app
  * @param {{ store: import('../store.js').CounterStore }} opts
  */
 export async function counterRoutes(app, opts) {
   const { store } = opts;
+
+  // GET /counters — list all counters sorted by name
+  app.get(
+    '/counters',
+    {
+      schema: {
+        response: listResponseSchema,
+      },
+    },
+    async (_req, reply) => {
+      return reply.send({ counters: store.list() });
+    },
+  );
 
   // POST /counters/:name — increment (or create) a named counter
   app.post(
