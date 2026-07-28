@@ -21,27 +21,31 @@ const VERSION_INFO = {
 /**
  * @param {import('fastify').FastifyInstance} app
  */
-export async function versionRoutes(app) {
-  app.get(
-    '/version',
-    {
-      config: { rateLimit: false },
-      schema: {
-        response: {
-          200: {
-            type: 'object',
-            required: ['name', 'version', 'gitUrl'],
-            properties: {
-              name:    { type: 'string' },
-              version: { type: 'string' },
-              gitUrl:  { type: 'string' },
-            },
-          },
+const SCHEMA = {
+  config: { rateLimit: false },
+  schema: {
+    response: {
+      200: {
+        type: 'object',
+        required: ['name', 'version', 'gitUrl'],
+        properties: {
+          name:    { type: 'string' },
+          version: { type: 'string' },
+          gitUrl:  { type: 'string' },
         },
       },
     },
-    async (_req, reply) => {
-      return reply.send(VERSION_INFO);
-    },
-  );
+  },
+};
+
+export async function versionRoutes(app) {
+  const handler = async (_req, reply) => reply.send(VERSION_INFO);
+
+  // /version — direct access (tests, internal, external deployments)
+  // /counters/version — alias for Ingress path-based routing in local k3d
+  //   Fastify prefers specific literal routes over parameterised /:name,
+  //   so this is matched before GET /counters/:name when path is exactly /counters/version.
+  for (const path of ['/version', '/counters/version']) {
+    app.get(path, SCHEMA, handler);
+  }
 }
