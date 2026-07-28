@@ -88,4 +88,28 @@ export async function counterRoutes(app, opts) {
       return reply.send({ name, value });
     },
   );
+
+  // DELETE /counters/:name — remove a named counter
+  app.delete(
+    '/counters/:name',
+    {
+      schema: {
+        params: nameParamSchema,
+        response: {
+          204: { type: 'null' },
+          ...errorResponseSchema,
+        },
+      },
+    },
+    async (req, reply) => {
+      const { name } = req.params;
+      const deleted = store.delete(name);
+
+      if (!deleted) {
+        return reply.status(404).send({ error: 'Counter not found', name });
+      }
+
+      return reply.status(204).send();
+    },
+  );
 }
