@@ -77,7 +77,7 @@ export async function buildApp(options = {}) {
   const store = new CounterStore();
 
   // Register routes
-  await app.register(healthRoutes);
+  await app.register(healthRoutes, { store });
   await app.register(openapiRoutes);
   await app.register(counterRoutes, { store });
 
