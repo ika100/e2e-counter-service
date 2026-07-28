@@ -1,0 +1,26 @@
+{
+  "name": "counter-service",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "REST microservice — tracks named in-memory counters via POST/GET /counters/:name",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test",
+    "lint": "npx eslint . --max-warnings=0",
+    "lint-fix": "npx eslint . --fix"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.0.2",
+    "@fastify/rate-limit": "^10.2.2",
+    "fastify": "^5.3.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT"
+}

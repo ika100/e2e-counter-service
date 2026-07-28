@@ -1,5 +1,7 @@
 .worktrees/
 planning/.build/
 node_modules/
+coverage/
 .env
 *.log
+dist/
