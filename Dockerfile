@@ -12,6 +12,9 @@ RUN npm ci --omit=dev
 # ---- Runtime stage ----
 FROM node:22-alpine AS runtime
 
+# Upgrade npm in runtime stage to fix bundled CVEs (tar, brace-expansion, etc.)
+RUN npm install -g npm@latest && npm cache clean --force
+
 # Create non-root working directory
 WORKDIR /app
 
