@@ -1,8 +1,8 @@
 {
   "name": "counter-service",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
-  "description": "REST microservice \u2014 tracks named in-memory counters via POST/GET /counters/:name",
+  "description": "REST microservice — tracks named in-memory counters via POST/GET /counters/:name",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
