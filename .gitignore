@@ -1,0 +1,5 @@
+.worktrees/
+planning/.build/
+node_modules/
+.env
+*.log
