@@ -61,7 +61,52 @@
 
 ---
 
-### Wave 4 [serial] — Security hardening (after Wave 3)
+### Wave 4 [parallel] — About Feature & Security hardening (after Wave 3)
+
+| ID | Title | Implements | Depends on | Acceptance criteria | Tests | Est | Milestone |
+|----|-------|-----------|------------|---------------------|-------|-----|-----------|
+| T-040 | GET /version endpoint | about/spec.md VER-001 | T-010 (store), T-013 (health pattern) | `GET /version` returns `200 { name: "counter-service", version: "<from package.json>", gitUrl: "https://github.com/ika100/e2e-counter-service" }`; version is read from `package.json` at startup (not hardcoded); endpoint excluded from rate limiting via `config: { rateLimit: false }`; integration test in `test/version.test.js` verifies all three fields; `devbox run test` exits 0; `devbox run lint` exits 0 | TC-VER-001, TC-VER-002, TC-VER-003 | S | M3 |
+
+**T-040 implementation notes:**
+
+```javascript
+// src/routes/version.js
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(readFileSync(join(__dirname, '../../package.json'), 'utf8'));
+
+export async function versionRoutes(app) {
+  app.get('/version', {
+    config: { rateLimit: false },
+    schema: {
+      response: {
+        200: {
+          type: 'object',
+          required: ['name', 'version', 'gitUrl'],
+          properties: {
+            name:    { type: 'string' },
+            version: { type: 'string' },
+            gitUrl:  { type: 'string' },
+          },
+        },
+      },
+    },
+  }, async (_req, reply) => reply.send({
+    name: 'counter-service',
+    version: pkg.version,
+    gitUrl: 'https://github.com/ika100/e2e-counter-service',
+  }));
+}
+```
+
+Register in `src/app.js` alongside `healthRoutes` and `countersRoutes`.
+
+---
+
+### Wave 4b [serial] — Security hardening (after Wave 4)
 
 | ID | Title | Implements | Depends on | Acceptance criteria | Tests | Est | Milestone |
 |----|-------|-----------|------------|---------------------|-------|-----|-----------|
@@ -90,8 +135,12 @@ M2 Walking skeleton — Wave 1 (parallel from main):
 M3 Full API — Wave 2 (parallel, after Wave 1 merged):
   T-020  T-021  T-022  T-023  T-024
 
-M4 Security & Release (serial, after Wave 2 merged):
-  T-SEC-002 → T-REL-002
+M3 Additional features — Wave 4 (parallel, after Wave 3 merged):
+  T-040 (version endpoint)
+  T-SEC-002 (dependency audit)
+
+M4 Release (serial, after Wave 4 merged):
+  T-REL-002
 ```
 
 **Critical path:** T-001 → T-CI-001 → T-010 → T-011 → T-020 → T-SEC-002 → T-REL-002

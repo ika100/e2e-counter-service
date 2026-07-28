@@ -128,6 +128,21 @@
 | contracts: API contract stability | value is number | TC-007, TC-004 |
 | contracts: OpenAPI schema | /openapi.json valid | TC-018 |
 
+---
+
+### Version Endpoint Test Cases (T-040)
+
+| Test ID | Level | Verifies | For task | Preconditions | Steps | Expected result |
+|---------|-------|---------|----------|---------------|-------|------------------|
+| TC-VER-001 | Integration | `GET /version` returns 200 with correct body | T-040 | Fastify app started via `buildApp()` | `app.inject({ method: 'GET', url: '/version' })` | Status 200; body `{ name: 'counter-service', version: <matches package.json>, gitUrl: 'https://github.com/ika100/e2e-counter-service' }` |
+| TC-VER-002 | Integration | `version` field matches `package.json` | T-040 | Same as above | Compare `response.body.version` with `JSON.parse(readFileSync('package.json')).version` | Values are equal |
+| TC-VER-003 | Integration | `/version` excluded from rate limit | T-040 | Rate limiter registered | Call `GET /version` 250 times (above 200/min limit) | All 250 responses return 200 (not 429) |
+
+---
+
+### Coverage checklist
+
 - [x] Every requirement scenario appears in the "Verifies" column at least once.
 - [x] Every task in the task plan appears in the "For task" column.
 - [x] Error, boundary, and negative cases have dedicated test cases (TC-008, TC-010–TC-015, TC-017, TC-019).
+- [x] About feature version endpoint test cases TC-VER-001–TC-VER-003 added (T-040).

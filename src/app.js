@@ -25,6 +25,7 @@ import { CounterStore } from './store.js';
 import { counterRoutes } from './routes/counters.js';
 import { healthRoutes } from './routes/health.js';
 import { openapiRoutes } from './routes/openapi.js';
+import { versionRoutes } from './routes/version.js';
 
 export async function buildApp(options = {}) {
   const {
@@ -79,6 +80,7 @@ export async function buildApp(options = {}) {
   // Register routes
   await app.register(healthRoutes, { store });
   await app.register(openapiRoutes);
+  await app.register(versionRoutes);
   await app.register(counterRoutes, { store });
 
   return app;
