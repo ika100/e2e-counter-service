@@ -6,7 +6,7 @@ docker-image: ghcr.io/ika100/e2e-counter-service
 gitops-repo: https://github.com/ika100/e2e-gitops.git
 gitops-values-path: apps/counter-service/values.yaml
 base-branch: main
-version: 0.1.0
+version: 0.1.1
 ---
 
 # counter-service
