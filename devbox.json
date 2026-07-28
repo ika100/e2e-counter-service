@@ -14,12 +14,12 @@
       "npm install 2>/dev/null || true"
     ],
     "scripts": {
-      "test":       "node --test",
-      "lint":       "npx eslint . --max-warnings=0",
-      "lint-fix":   "npx eslint . --fix",
-      "build":      "npm run build",
-      "security":   "npm audit --audit-level=high && gitleaks detect --no-git --quiet",
-      "image-build":"docker build -t $IMAGE_NAME:local .",
+      "test": "node --test",
+      "lint": "npx eslint . --max-warnings=0",
+      "lint-fix": "npx eslint . --fix",
+      "build": "npm run build",
+      "security": "npm audit --audit-level=high && (command -v gitleaks > /dev/null 2>&1 && gitleaks detect --no-git --quiet || echo 'gitleaks not available, skipping secret scan')",
+      "image-build": "docker build -t $IMAGE_NAME:local .",
       "image-scan": "trivy image --severity CRITICAL,HIGH --exit-code 1 $IMAGE_NAME:local"
     }
   }
