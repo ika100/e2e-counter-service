@@ -1,6 +1,6 @@
 /**
- * Integration tests for POST/GET /counters/:name
- * TC-004, TC-005, TC-006, TC-007, TC-008, TC-019
+ * Integration tests for POST/GET/DELETE /counters/:name
+ * TC-004, TC-005, TC-006, TC-007, TC-008, TC-019, TC-033, TC-034, TC-035
  */
 
 import { describe, it, before, after } from 'node:test';
@@ -84,5 +84,46 @@ describe('GET /counters/:name', () => {
   it('TC-019: unknown route returns 404', async () => {
     const res = await app.inject({ method: 'GET', url: '/undefined-path' });
     assert.equal(res.statusCode, 404);
+  });
+});
+
+describe('DELETE /counters/:name', () => {
+  let app;
+
+  before(async () => {
+    app = await buildApp({ logLevel: 'silent' });
+    await app.ready();
+  });
+
+  after(async () => {
+    await app.close();
+  });
+
+  // TC-033: Delete an existing counter returns 204
+  it('TC-033: DELETE existing counter returns 204 No Content', async () => {
+    await app.inject({ method: 'POST', url: '/counters/to-delete' });
+    const res = await app.inject({ method: 'DELETE', url: '/counters/to-delete' });
+    assert.equal(res.statusCode, 204);
+    assert.equal(res.body, '');
+  });
+
+  // TC-034: Delete a non-existent counter returns 404
+  it('TC-034: DELETE non-existent counter returns 404 { error, name }', async () => {
+    const res = await app.inject({ method: 'DELETE', url: '/counters/nonexistent' });
+    assert.equal(res.statusCode, 404);
+    const body = res.json();
+    assert.equal(body.error, 'Counter not found');
+    assert.equal(body.name, 'nonexistent');
+  });
+
+  // TC-035: Subsequent GET after DELETE returns 404
+  it('TC-035: GET after DELETE returns 404', async () => {
+    await app.inject({ method: 'POST', url: '/counters/ephemeral' });
+    await app.inject({ method: 'DELETE', url: '/counters/ephemeral' });
+    const res = await app.inject({ method: 'GET', url: '/counters/ephemeral' });
+    assert.equal(res.statusCode, 404);
+    const body = res.json();
+    assert.equal(body.error, 'Counter not found');
+    assert.equal(body.name, 'ephemeral');
   });
 });

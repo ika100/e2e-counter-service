@@ -31,4 +31,15 @@ export class CounterStore {
   get(name) {
     return this.#counters.get(name);
   }
+
+  /**
+   * Delete a named counter from the store.
+   *
+   * @param {string} name - Counter name
+   * @returns {boolean} `true` if the counter existed and was deleted,
+   *   `false` if the counter did not exist.
+   */
+  delete(name) {
+    return this.#counters.delete(name);
+  }
 }
